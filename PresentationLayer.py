@@ -1,4 +1,4 @@
-import IN450U2_BusinessLayer as bl
+import IN450_BusinessLayer as bl
 import tkinter as tk
 
 actions = bl.BusinessLayer()
