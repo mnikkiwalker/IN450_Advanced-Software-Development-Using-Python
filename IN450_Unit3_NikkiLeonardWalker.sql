@@ -1,0 +1,36 @@
+USE [IN450];
+GO
+
+/*Creating database roles*/
+CREATE ROLE [IN450a];
+CREATE ROLE [IN450b];
+CREATE ROLE [IN450c];
+GO
+
+/*Assigning permissons to the roles*/
+GRANT SELECT ON [IN450a] TO [IN450a];
+GRANT SELECT ON [IN450b] TO [IN450a];
+GRANT SELECT ON [IN450c] TO [IN450a];
+
+GRANT SELECT ON [IN450b] TO [IN450b];
+
+GRANT SELECT ON [IN450c] TO [IN450c];
+GO
+
+/*Creating logins*/
+CREATE LOGIN [IN450a_Login] WITH PASSWORD = 'SecurePassword123!';
+CREATE LOGIN [IN450b_Login] WITH PASSWORD = 'SecurePassword123!';
+CREATE LOGIN [IN450c_Login] WITH PASSWORD = 'SecurePassword123!';
+GO
+
+/*Create users and map to logins*/
+CREATE USER [IN450a_user] FOR LOGIN [IN450a_Login];
+CREATE USER [IN450b_user] FOR LOGIN [IN450b_Login];
+CREATE USER [IN450c_user] FOR LOGIN [IN450c_Login];
+GO
+
+/*Adding users to groups*/
+ALTER ROLE [IN450a] ADD MEMBER [IN450a_user];
+ALTER ROLE [IN450b] ADD MEMBER [IN450b_user];
+ALTER ROLE [IN450c] ADD MEMBER [IN450c_user];
+GO
