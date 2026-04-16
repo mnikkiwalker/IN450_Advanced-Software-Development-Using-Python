@@ -43,28 +43,28 @@ button2 = tk.Button(functionsFrame, text="List Table B Names", command=lambda:on
 
 # login fields
 loginUsernameLabel = tk.Label(loginFrame, text="Username: ")
-loginUsernameLabel.grid(row=0, column=0, padx=10, pady=10)
+loginUsernameLabel.grid(row=0, column=0, padx=10, pady=5, sticky="e")
 
 loginUsername = tk.Entry(loginFrame)
-loginUsername.grid(row=0, column=1, padx=10, pady=10)
+loginUsername.grid(row=0, column=1, padx=10, pady=5)
 
 loginPasswordLabel = tk.Label(loginFrame, text="Password: ")
-loginPasswordLabel.grid(row=1, column=0, padx=10, pady=10)
+loginPasswordLabel.grid(row=1, column=0, padx=10, pady=5, sticky="e")
 
 loginPassword = tk.Entry(loginFrame)
-loginPassword.grid(row=1, column=1, padx=10, pady=10)
+loginPassword.grid(row=1, column=1, padx=10, pady=5)
 
 loginServerLabel = tk.Label(loginFrame, text="Server: ")
-loginServerLabel.grid(row=2, column=0, padx=10, pady=10)
+loginServerLabel.grid(row=2, column=0, padx=10, pady=5, sticky="e")
 
 loginServer = tk.Entry(loginFrame)
-loginServer.grid(row=2, column=1, padx=10, pady=10)
+loginServer.grid(row=2, column=1, padx=10, pady=5)
 
 loginDatabaseLabel = tk.Label(loginFrame, text="Database: ")
-loginDatabaseLabel.grid(row=3, column=0, padx=10, pady=10)
+loginDatabaseLabel.grid(row=3, column=0, padx=10, pady=5, sticky="e")
 
 loginDatabase = tk.Entry(loginFrame)
-loginDatabase.grid(row=3, column=1, padx=10, pady=10)
+loginDatabase.grid(row=3, column=1, padx=10, pady=5)
 
 
 # place elements on window
@@ -72,9 +72,9 @@ loginFrame.grid(row=0, column=0, sticky="nsew")
 functionsFrame.grid(row=0, column=1, sticky="nsew")
 
 
-button1.pack(pady=20)
-button2.pack(pady=10)
-outputArea.pack(pady=20)
+button1.pack(padx=10, pady=20)
+button2.pack(padx=10, pady=10)
+outputArea.pack(padx=10,  pady=20)
 
 # cun the app
 root.mainloop()
