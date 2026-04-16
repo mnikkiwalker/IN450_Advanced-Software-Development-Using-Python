@@ -1,19 +1,20 @@
 import pyodbc as pyo
 
-username = None
-password = None
-server = None
-database = None
-
-
 class BusinessLayer:
 
     def __init__(self):
-        pass
+        self.server = None
+        self.database = None
+        self.username = None
+        self.password = None
 
     def validateLogin(self, usernameEnt, passwordEnt, serverEnt, databaseEnt):
 
         print("Login validation initiated")
+        print(f"Server: {serverEnt.get()}")
+        print(f"Database: {databaseEnt.get()}")
+        print(f"Username: {usernameEnt.get()}")
+        print(f"Password: {passwordEnt.get()}")
 
         try:
             connection = pyo.connect(
@@ -32,10 +33,11 @@ class BusinessLayer:
             connection.close()
             print("Connection closed")
 
-            username = usernameEnt
-            password = passwordEnt
-            server = serverEnt
-            database = databaseEnt
+            self.username = usernameEnt.get()
+            self.password = passwordEnt.get()
+            self.server = serverEnt.get()
+            self.database = databaseEnt.get()
+
             print("Session initiated with credentials")
 
             message = "Connection successful"
@@ -52,14 +54,21 @@ class BusinessLayer:
             return message
 
     # function to display number of rows on table A
-    def numberOfRowsA(self, username=username, password=password, server=server, database=database):
+    def numberOfRowsA(self):
+
+        print("Function A initiated with:")
+        print(f"Server: {self.server}")
+        print(f"Database: {self.database}")
+        print(f"Username: {self.username}")
+        print(f"Password: {self.password}")
+
         try:
             connection = pyo.connect(
                 r"DRIVER={ODBC Driver 17 for SQL Server};"
-                f"SERVER={server};"
-                f"DATABASE={database};"
-                f"UID={username};"
-                f"PWD={password};"        
+                f"SERVER={self.server};"
+                f"DATABASE={self.database};"
+                f"UID={self.username};"
+                f"PWD={self.password};"        
                 )
             
             cursor = connection.cursor()
@@ -70,21 +79,30 @@ class BusinessLayer:
             return dataOutput
 
         except Exception as e:
+            print(f"Database Error: {e}")
+            message = f"Database Error: {str(e)}"
             try:
                 connection.close()
             except:
                 pass
-            print(e)
+            return message
                 
     # function to display list of names on table B
-    def listNamesB(self, username=username, password=password, server=server, database=database):
+    def listNamesB(self):
+
+        print("Function B initiated with:")
+        print(f"Server: {self.server}")
+        print(f"Database: {self.database}")
+        print(f"Username: {self.username}")
+        print(f"Password: {self.password}")
+
         try:
             connection = pyo.connect(
                 r"DRIVER={ODBC Driver 17 for SQL Server};"
-                f"SERVER={server};"
-                f"DATABASE={database};"
-                f"UID={username};"
-                f"PWD={password};"        
+                f"SERVER={self.server};"
+                f"DATABASE={self.database};"
+                f"UID={self.username};"
+                f"PWD={self.password};"        
                 )
     
             cursor = connection.cursor()
@@ -93,19 +111,58 @@ class BusinessLayer:
             connection.close()
 
             nameList = []
+            successStatus = True
 
             for name in fetchedData:
                 nameList.append(name[0])
 
-            return nameList
+            return nameList, successStatus
 
         except Exception as e:
+            print(f"Database Error: {e}")
+            message = f"Database Error: {str(e)}"
+            successStatus = False
+
             try:
                 connection.close()
             except:
                 pass
-            print(e)
+            return message, successStatus
     
+
+        # function to display number of rows on table C
+    def numberOfRowsC(self):
+
+        print("Function C initiated with:")
+        print(f"Server: {self.server}")
+        print(f"Database: {self.database}")
+        print(f"Username: {self.username}")
+        print(f"Password: {self.password}")
+
+        try:
+            connection = pyo.connect(
+                r"DRIVER={ODBC Driver 17 for SQL Server};"
+                f"SERVER={self.server};"
+                f"DATABASE={self.database};"
+                f"UID={self.username};"
+                f"PWD={self.password};"        
+                )
+            
+            cursor = connection.cursor()
+            data = cursor.execute("select count(*) from IN450.dbo.IN450C")
+            dataOutput = data.fetchone()[0]
+            connection.close()
+
+            return dataOutput
+
+        except Exception as e:
+            print(f"Database Error: {e}")
+            message = f"Database Error: {str(e)}"
+            try:
+                connection.close()
+            except:
+                pass
+            return message
 
 # Used to test funcionality
 # bl = BusinessLayer()

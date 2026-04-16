@@ -24,14 +24,16 @@ outputArea = tk.Text(functionsFrame, height=10, width=50)
 # create buttons
 button1 = tk.Button(functionsFrame, text="Show Table A Row Count", command=lambda:onButtonClick("A") , width=20, height=2)
 button2 = tk.Button(functionsFrame, text="List Table B Names", command=lambda:onButtonClick("B"), width=20, height=2)
+button3 = tk.Button(functionsFrame, text="Show Table C Row Count", command=lambda:onButtonClick("C"), width=20, height=2)
 
 
 # place elements on window
 loginFrame.grid(row=0, column=0, sticky="nsew")
 functionsFrame.grid(row=0, column=1, sticky="nsew")
 
-button1.pack(padx=10, pady=20)
-button2.pack(padx=10, pady=10)
+button1.pack(padx=10)
+button2.pack(padx=10)
+button3.pack(padx=10)
 outputArea.pack(padx=10,  pady=20)
 
 
@@ -82,9 +84,16 @@ def onButtonClick(function):
         outputArea.insert(tk.END, output)
         return output
     elif function == "B":
-        listInput = actions.listNamesB()
-        for item in listInput:
-            outputArea.insert(tk.END, f"{item}\n")
+        listInput, responseType = actions.listNamesB()
+        if responseType == True:
+            for item in listInput:
+                outputArea.insert(tk.END, f"{item}\n")
+        else:
+            outputArea.insert(tk.END, listInput)
+    elif function == "C":
+        output = actions.numberOfRowsC()
+        outputArea.insert(tk.END, output)
+        return output
 
 def onConnectClick(username, password, server, database):
     messageBox.delete("1.0", tk.END)
