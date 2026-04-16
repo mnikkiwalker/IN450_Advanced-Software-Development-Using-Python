@@ -1,19 +1,65 @@
 import pyodbc as pyo
 
+username = None
+password = None
+server = None
+database = None
+
 
 class BusinessLayer:
 
     def __init__(self):
         pass
 
-    # function to display number of rows on table A
-    def numberOfRowsA(self):
+    def validateLogin(self, usernameEnt, passwordEnt, serverEnt, databaseEnt):
+
+        print("Login validation initiated")
+
         try:
             connection = pyo.connect(
                 r"DRIVER={ODBC Driver 17 for SQL Server};"
-                r"SERVER=LAPTOP-IUDORUJJ\SQLEXPRESS;"
-                r"DATABASE=IN450;"
-                r"Trusted_Connection=yes;"        
+                f"SERVER={serverEnt.get()};"
+                f"DATABASE={databaseEnt.get()};"
+                f"UID={usernameEnt.get()};"
+                f"PWD={passwordEnt.get()};"        
+                )
+            
+            print("Connection parameters accepted")
+            
+            cursor = connection.cursor()
+            print("Connection established")
+
+            connection.close()
+            print("Connection closed")
+
+            username = usernameEnt
+            password = passwordEnt
+            server = serverEnt
+            database = databaseEnt
+            print("Session initiated with credentials")
+
+            message = "Connection successful"
+
+            return message
+
+        except Exception as e:
+            print("Connection failed")
+            message = f"Connection failed: {e}"
+            try:
+                connection.close()
+            except:
+                pass
+            return message
+
+    # function to display number of rows on table A
+    def numberOfRowsA(self, username=username, password=password, server=server, database=database):
+        try:
+            connection = pyo.connect(
+                r"DRIVER={ODBC Driver 17 for SQL Server};"
+                f"SERVER={server};"
+                f"DATABASE={database};"
+                f"UID={username};"
+                f"PWD={password};"        
                 )
             
             cursor = connection.cursor()
@@ -31,14 +77,15 @@ class BusinessLayer:
             print(e)
                 
     # function to display list of names on table B
-    def listNamesB(self):
+    def listNamesB(self, username=username, password=password, server=server, database=database):
         try:
             connection = pyo.connect(
-            r"DRIVER={ODBC Driver 17 for SQL Server};"
-            r"SERVER=LAPTOP-IUDORUJJ\SQLEXPRESS;"
-            r"DATABASE=IN450;"
-            r"Trusted_Connection=yes;"        
-            )
+                r"DRIVER={ODBC Driver 17 for SQL Server};"
+                f"SERVER={server};"
+                f"DATABASE={database};"
+                f"UID={username};"
+                f"PWD={password};"        
+                )
     
             cursor = connection.cursor()
             data = cursor.execute("select first_name+' '+last_name from IN450.dbo.IN450B")
